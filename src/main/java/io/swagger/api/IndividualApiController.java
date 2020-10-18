@@ -47,7 +47,7 @@ public class IndividualApiController implements IndividualApi {
 
     public ResponseEntity<Individual> createIndividual(@ApiParam(value = "The Individual to be created" ,required=true )  @Valid @RequestBody IndividualCreate individual) {
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        if (accept != null && (accept.contains("application/json") || accept.contains("*/*") )) {
             try {
                 return new ResponseEntity<Individual>(individualService.create(individual),HttpStatus.OK);
             } catch (ApiException e) {
@@ -60,7 +60,7 @@ public class IndividualApiController implements IndividualApi {
     }
 
     public ResponseEntity<Void> deleteIndividual(@ApiParam(value = "Identifier of the Individual",required=true) @PathVariable("id") String id) {
-        String accept = request.getHeader("Accept");
+
         try {
             individualService.delete(id);
             return new ResponseEntity<Void>(HttpStatus.OK);
@@ -71,7 +71,7 @@ public class IndividualApiController implements IndividualApi {
 
     public ResponseEntity<List<Individual>> listIndividual(@ApiParam(value = "Comma-separated properties to be provided in response") @Valid @RequestParam(value = "fields", required = false) String fields,@ApiParam(value = "Requested index for start of resources to be provided in response") @Valid @RequestParam(value = "offset", required = false) Integer offset,@ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false) Integer limit) {
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        if (accept != null && (accept.contains("application/json") || accept.contains("*/*") )) {
             try {
 
                 List<Individual> listAll = null;
@@ -110,7 +110,7 @@ public class IndividualApiController implements IndividualApi {
 
     public ResponseEntity<Individual> patchIndividual(@ApiParam(value = "Identifier of the Individual",required=true) @PathVariable("id") String id,@ApiParam(value = "The Individual to be updated" ,required=true )  @Valid @RequestBody IndividualUpdate individual) {
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        if (accept != null && (accept.contains("application/json") || accept.contains("*/*") )) {
             try {
                 return new ResponseEntity<Individual>(individualService.update(id ,individual),HttpStatus.OK);
             } catch (Exception e) {
@@ -124,7 +124,7 @@ public class IndividualApiController implements IndividualApi {
 
     public ResponseEntity<Individual> retrieveIndividual(@ApiParam(value = "Identifier of the Individual",required=true) @PathVariable("id") String id,@ApiParam(value = "Comma-separated properties to provide in response") @Valid @RequestParam(value = "fields", required = false) String fields) {
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        if (accept != null && (accept.contains("application/json") || accept.contains("*/*") )) {
             try {
                 Individual individual = individualService.findById(id);
 
